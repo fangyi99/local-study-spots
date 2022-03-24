@@ -1,0 +1,63 @@
+.App {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-image: url("https://www.riverstoneacu.com/x/cdn/?https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-Blue-White-Background-Image.jpg");
+}
+
+
+/*Search*/
+
+.search {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+}
+
+input {
+    width: 85%;
+    height: 50px;
+    border-radius: 10px;
+}
+
+
+/*Results*/
+
+.result {
+    width: 85%;
+    border: 1px grey solid;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    margin: auto;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.result:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.result>img {
+    width: 135px;
+    height: 135px;
+    padding: 5px;
+    border-radius: 15px;
+    float: left;
+}
+
+.content {
+    padding-left: 17%;
+}
+
+.icons {
+    width: 20px;
+    height: 20px;
+    /* margin-top: -5px; */
+    padding-right: 5px;
+}
+
+.resources {
+    width: 20px;
+    height: 20px;
+    padding-right: 3px;
+    color: rgba(0, 0, 255, 0.63) !important;
+}
