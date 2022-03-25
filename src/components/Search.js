@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import useInput from "../useInput";
+// import useCoord from "../useCoord";
+// import { GeolocateControl } from "react-map-gl";
 
-const Search = () => {
+const Search = ({setOrigin}) => {
     const address = useInput("");
+    // const coord = useCoord();
 
     return(
         <Wrapper>
@@ -12,6 +15,11 @@ const Search = () => {
                 {...address}
                 isTyping={address.value !== ""}
             />
+            {/* <GeolocateControl
+                style={geolocateStyle}
+                positionOptions={{enableHighAccuracy: true}}
+                trackUserLocation={true}
+            /> */}
             {address.suggestions?.length > 0 && (
                 <SuggestionWrapper>
                 {address.suggestions.map((suggestion, index) => {
@@ -19,8 +27,10 @@ const Search = () => {
                     <Suggestion
                         key={index}
                         onClick={() => {
-                        address.setValue(suggestion.place_name);
-                        address.setSuggestions([]);
+                            address.setValue(suggestion.place_name);
+                            address.setSuggestions([]);
+                            // coord.setOrigin(suggestion.geometry.coordinates[0], suggestion.geometry.coordinates[1]);
+                            setOrigin(suggestion.geometry.coordinates[0], suggestion.geometry.coordinates[1]);
                         }}
                     >
                         {suggestion.place_name}
@@ -30,28 +40,28 @@ const Search = () => {
                 </SuggestionWrapper>
             )}
         </Wrapper>
-
     )
 
 }
+
 
 export default Search;
 
 const Wrapper = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    width: 86%;
+    width: 85.6%;
     margin: auto;
     margin-bottom: 30px;
-
 `;
 
 const Input = styled.input`
-  width: 96%;
-  height: 40px;
+  width: 100%;
+  height: 50px;
   background: white;
   border: grey solid 1px;
   padding: 10px 20px;
+  box-sizing: border-box;
   border-radius: 10px;
   position: relative;
   display: grid;

@@ -7,8 +7,15 @@
 
 /*Results*/
 
+h3 {
+    display: inline-block;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
 .result {
     width: 85%;
+    height: 148px;
     border: 1px grey solid;
     border-radius: 10px;
     background-color: white;
@@ -30,13 +37,17 @@
 }
 
 .content {
-    padding-left: 17%;
+    padding-left: 180px;
+}
+
+.content>span {
+    float: right;
+    margin: 10px;
 }
 
 .icons {
     width: 20px;
     height: 20px;
-    /* margin-top: -5px; */
     padding-right: 5px;
 }
 
