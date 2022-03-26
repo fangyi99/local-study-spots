@@ -7,7 +7,7 @@
 
 /*Search*/
 
-button {
+.search button {
     display: inline;
     float: right;
     width: 6%;
@@ -73,4 +73,37 @@ h3 {
     height: 20px;
     padding-right: 3px;
     color: grey !important;
+}
+
+
+/*Pagination*/
+
+.pageNumbers {
+    list-style: none;
+    display: flex;
+    background-color: white;
+    width: fit-content;
+    float: right;
+    margin-bottom: 30px;
+    margin-right: 7%;
+}
+
+.pageNumbers li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pageNumbers li.active {
+    background-color: #2196F3;
+    color: white;
+}
+
+.pageNumbers button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.pageNumbers li:hover {
+    background-color: #2195f36c;
 }

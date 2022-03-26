@@ -9,7 +9,7 @@ const Search = ({setOrigin}) => {
     // const coord = useCoord();
 
     return(
-        <Wrapper>
+        <Wrapper className="search">
             <Input
                 placeholder="Address"
                 {...address}

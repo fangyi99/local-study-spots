@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function App() {
 
-  const [coord, setCoord] = useState({longitude:0, latitude: 0});
+  const [coord, setCoord] = useState({longitude: 0, latitude: 0});
 
   const setOrigin = (longitude, latitude) => {
     setCoord({longitude: longitude, latitude: latitude});
