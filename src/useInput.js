@@ -17,12 +17,24 @@ const useInput = (initialValue) => {
         }
     };
 
+    const findMyLocation = async(longitude, latitude) => {
+        try {
+            const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}&country=SG`;
+            const response = await fetch(endpoint);
+            const results = await response.json();
+            setSuggestions(results?.features);
+        } catch (error) {
+            console.log("Error fetching data, ", error);
+        }
+    }
+
     return {
         value,
         onChange: handleChange,
         setValue,
         suggestions,
-        setSuggestions
+        setSuggestions,
+        findMyLocation
     };
 };
 

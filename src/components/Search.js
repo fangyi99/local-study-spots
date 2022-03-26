@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import useInput from "../useInput";
+import { MdMyLocation } from "react-icons/md";
 // import useCoord from "../useCoord";
-// import { GeolocateControl } from "react-map-gl";
 
 const Search = ({setOrigin}) => {
     const address = useInput("");
@@ -15,11 +15,21 @@ const Search = ({setOrigin}) => {
                 {...address}
                 isTyping={address.value !== ""}
             />
-            {/* <GeolocateControl
-                style={geolocateStyle}
-                positionOptions={{enableHighAccuracy: true}}
-                trackUserLocation={true}
-            /> */}
+            <button><MdMyLocation 
+                        title="Get Your Location"
+                        onClick={()=>{
+                            if ("geolocation" in navigator) {
+                                console.log("Geolocation available");
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                    address.findMyLocation(position.coords.longitude, position.coords.latitude);
+                                });
+                            } else {
+                                console.log("Geolocation not available");
+                            }
+                        }}
+                    />
+            </button>
+
             {address.suggestions?.length > 0 && (
                 <SuggestionWrapper>
                 {address.suggestions.map((suggestion, index) => {
@@ -56,16 +66,15 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 94%;
   height: 50px;
   background: white;
   border: grey solid 1px;
+  border-right: none;
   padding: 10px 20px;
   box-sizing: border-box;
-  border-radius: 10px;
-  position: relative;
-  display: grid;
-  justify-self: center;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   &:focus {
     outline: none;
     border-radius: ${(props) => props.isTyping && "10px 10px 0px 0px"};
