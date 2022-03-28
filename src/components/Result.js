@@ -125,6 +125,9 @@ const Result = ({data, getOrigin}) => {
 
     return(
         <>
+        {
+            data.length > 0 ?
+            <>
             {Venues(currentItems, calculateDistance)}
             <ul className='pageNumbers'>
                 <li>
@@ -144,6 +147,13 @@ const Result = ({data, getOrigin}) => {
                 </li>
             </ul>
         </>
+        :
+        <div className='not-found'>
+            <p>——— No result found ———</p>
+            <img src="not-found.gif" alt='No result found'/>
+        </div>
+        }
+    </>
     )
 }
 

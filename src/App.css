@@ -22,6 +22,51 @@
 }
 
 
+/*Filter*/
+
+.filter {
+    margin: auto;
+    margin-bottom: 30px;
+    width: 84%;
+    padding: 10px;
+    border: grey solid 1px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.filter b {
+    font-size: 120%;
+    margin-right: 20px;
+}
+
+.dropdown {
+    display: inline;
+}
+
+.filter .dropdown-label {
+    background-color: white;
+    border: rgba(128, 128, 128, 0.479) solid 1px;
+    border-radius: 5px;
+    margin-right: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-list {
+    border: grey solid 1px;
+    width: 150px;
+    position: absolute;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.carret-down {
+    margin-bottom: -3px;
+}
+
+
 /*Results*/
 
 h3 {
@@ -106,4 +151,18 @@ h3 {
 
 .pageNumbers li:hover {
     background-color: #2195f36c;
+}
+
+
+/*Not Found*/
+
+.not-found {
+    background-color: transparent;
+    width: fit-content;
+    text-align: center;
+    text-transform: capitalize;
+    margin: auto;
+    margin-top: 30px;
+    padding: 15px;
+    color: #2196F3;
 }

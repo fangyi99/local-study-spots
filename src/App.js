@@ -1,10 +1,41 @@
 import './App.css';
 import Data from "./studySpots.json";
 import Search from './components/Search';
+import Filter from './components/Filter';
 import Result from './components/Result';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+
+  const [data, setData] = useState(Data);
+  const [filters, setFilters] = useState({
+    types: ["cafe", "cc", "library", "mall", "school", "others"],
+    resources: ["aircon", "food", "outlets", "wifi"]
+  });
+
+  useEffect(()=> {
+    filterResults()
+  }, [filters]);
+
+  const onFilterChange = (filterType) => {
+    var newFilters = [];
+    var checkboxes = document.querySelectorAll(`input[name='${filterType}']:checked`);
+    Array.from(checkboxes).forEach((checkbox)=>{newFilters.push(checkbox.value)});
+    setFilters(prevFilters => {
+      return {
+        ...prevFilters,
+        [filterType]: newFilters
+      };
+    });
+  }
+
+  const filterResults = () => {
+    let newResults = [];
+    newResults = Data.filter((result) => 
+      filters.types.includes(result.type) && result.resources.sort().join(',') === filters.resources.sort().join(',')
+    );
+    setData(newResults);
+  }
 
   const [coord, setCoord] = useState({longitude: 0, latitude: 0});
 
@@ -21,8 +52,11 @@ function App() {
       <Search 
         setOrigin={setOrigin}
       />
+      <Filter
+        filters={filters}
+        onFilterChange={onFilterChange}/>
       <Result 
-        data={Data}
+        data={data}
         getOrigin={getOrigin}
       />
     </div>
