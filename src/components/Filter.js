@@ -13,7 +13,7 @@ const Filter = ({filterResults}) => {
 
     const [filters, setFilters] = useState({
         types: ["cafe", "cc", "library", "mall", "school", "others"],
-        resources: ["aircon", "food", "outlets", "wifi"],
+        resources: ["aircon", "food", "chargingport", "wifi"],
         region: ["central", "north", "northeast", "east", "west"]
       });
 
@@ -159,8 +159,8 @@ const Filter = ({filterResults}) => {
                                         </label><br></br>
 
                                         <label className="dropdown-option">
-                                            <input type="checkbox" name="resources" value="outlets" onChange={(e)=>{onFilterChange(e.target.name);toggleChecked(e)}} defaultChecked={checked.outlets}/>
-                                            Power sockets
+                                            <input type="checkbox" name="resources" value="chargingport" onChange={(e)=>{onFilterChange(e.target.name);toggleChecked(e)}} defaultChecked={checked.chargingport}/>
+                                            Charging Ports
                                         </label><br></br>
                                         
                                         <label className="dropdown-option">

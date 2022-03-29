@@ -5,6 +5,7 @@ import { MdMyLocation } from "react-icons/md";
 // import useCoord from "../useCoord";
 
 const Search = ({setOrigin}) => {
+
     const address = useInput("");
     // const coord = useCoord();
 
@@ -66,7 +67,7 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-  width: 94%;
+  width: 90%;
   height: 50px;
   background: white;
   border: grey solid 1px;

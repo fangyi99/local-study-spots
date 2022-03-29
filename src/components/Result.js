@@ -1,39 +1,46 @@
 import { getDistance } from 'geolib';
 import { useState } from 'react';
-import { FaWifi } from "react-icons/fa";
-import { MdLocationOn, MdAccessTimeFilled, MdMore, MdAir, MdOutlineFastfood, MdOutlineOutlet, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md"
+import { MdLocationOn, MdAccessTimeFilled, MdMore, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md"
 
 const Venues = (data, calculateDistance) => {
     return (
         <>
         {data.map((venue)=>(
-            <div key={venue.name} className="result">
-                <img src={venue.thumbnail} alt={venue.name}/>
-    
+            <div key={venue.id} className="result">
                 <div className="content">
-                    <h3>{venue.name}</h3>
-                    <span>{calculateDistance(venue.name, venue.coordinates)}</span>
                     <table>
-                        <tbody>
-                            <tr>
-                                <td><MdLocationOn className="icons"/></td>
-                                <td>{venue.address}</td>
-                            </tr>
-                            <tr>
-                                <td><MdAccessTimeFilled className="icons"/></td>
-                                <td>{venue.hours}</td>
-                            </tr>
-                            <tr>
-                                <td><MdMore className="icons"/></td>
-                                <td>
-                                    {venue.resources.find((val)=> val === "wifi") && <FaWifi className="resources" title="Wifi"/>}
-                                    {venue.resources.find((val)=> val === "outlets") && <MdOutlineOutlet className="resources" title="Power sockets"/>}
-                                    {venue.resources.find((val)=> val === "aircon") && <MdAir className="resources" title="Aircon"/>}
-                                    {venue.resources.find((val)=> val === "food") && <MdOutlineFastfood className="resources" title="Food"/>}
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tr>
+                            <td className='thumbnail'><img src={venue.thumbnail} alt={venue.name}/><span className='bottom'>{calculateDistance(venue.name, venue.coordinates)}</span></td>
+                            <td>
+                                <h3>{venue.name}</h3>
+                                <span className='top'>{calculateDistance(venue.name, venue.coordinates)}</span>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td className='iconLabel'><MdLocationOn className="icons"/></td>
+                                            <td>{venue.address}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='iconLabel'><MdAccessTimeFilled className="icons"/></td>
+                                            <td>{venue.hours}</td>
+                                        </tr>
+                                        <tr>
+                                            <td className='iconLabel'><MdMore className="icons"/></td>
+                                            <td>
+                                                <div className='resources'>
+                                                    {venue.resources.find((val)=> val === "wifi") && <div className="resource">wifi</div>}
+                                                    {venue.resources.find((val)=> val === "chargingport") && <div className="resource">charging ports</div>}
+                                                    {venue.resources.find((val)=> val === "aircon") && <div className="resource">aircon</div>}
+                                                    {venue.resources.find((val)=> val === "food") && <div className="resource">food</div>}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
                     </table>
+                    
                 </div>
             </div>
         ))}

@@ -10,7 +10,7 @@
 .search button {
     display: inline;
     float: right;
-    width: 6%;
+    width: 10%;
     height: 50px;
     background: #2195f3a9;
     color: white;
@@ -71,13 +71,12 @@
 
 h3 {
     display: inline-block;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    margin: 5px;
 }
 
 .result {
     width: 85%;
-    height: 148px;
+    height: fit-content;
     border: 1px grey solid;
     border-radius: 10px;
     background-color: white;
@@ -90,19 +89,26 @@ h3 {
     background-color: whitesmoke;
 }
 
-.result>img {
-    width: 135px;
-    height: 135px;
-    padding: 5px;
+.content img {
+    width: 126px;
+    height: 126px;
     border-radius: 15px;
-    float: left;
 }
 
-.content {
-    padding-left: 180px;
+.content span.bottom {
+    display: none;
 }
 
-.content>span {
+.content table {
+    width: 100%;
+}
+
+.content .thumbnail {
+    width: 10%;
+    padding-right: 15px;
+}
+
+.content span {
     float: right;
     margin: 10px;
 }
@@ -113,11 +119,13 @@ h3 {
     padding-right: 5px;
 }
 
-.resources {
-    width: 20px;
-    height: 20px;
-    padding-right: 3px;
-    color: grey !important;
+.resource {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 4px;
+    margin-right: 5px;
+    background: #ddd;
+    color: #444;
 }
 
 
@@ -168,4 +176,42 @@ h3 {
 
 .not-found img {
     height: 200px;
+}
+
+
+/*Responsive*/
+
+@media (max-width: 680px) {
+    .iconLabel {
+        display: none;
+    }
+    .resource {
+        margin-bottom: 5px;
+    }
+    .content span.top {
+        display: none;
+    }
+    .content span.bottom {
+        display: block;
+        margin: auto;
+        padding-top: 5px;
+        width: 100%;
+        text-align: center;
+    }
+    .search input {
+        width: 80%;
+    }
+    .search button {
+        width: 20%;
+    }
+}
+
+@media (max-width: 485px) {
+    .filter td:first-of-type {
+        display: none;
+    }
+    .filter .dropdown-label {
+        margin: 0px;
+        width: 100%;
+    }
 }
