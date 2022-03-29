@@ -10,7 +10,8 @@ function App() {
   const [data, setData] = useState(Data);
   const [filters, setFilters] = useState({
     types: ["cafe", "cc", "library", "mall", "school", "others"],
-    resources: ["aircon", "food", "outlets", "wifi"]
+    resources: ["aircon", "food", "outlets", "wifi"],
+    location: ["southeast", "west"]
   });
 
   useEffect(()=> {
@@ -30,9 +31,11 @@ function App() {
   }
 
   const filterResults = () => {
+    //filters.location.includes(result.location) && 
+    //result.resources.sort().join(',') === filters.resources.sort().join(',')
     let newResults = [];
     newResults = Data.filter((result) => 
-      filters.types.includes(result.type) && result.resources.sort().join(',') === filters.resources.sort().join(',')
+      filters.types.includes(result.type) && filters.location.includes(result.location) && result.resources.sort().join(',') === filters.resources.sort().join(',')
     );
     setData(newResults);
   }

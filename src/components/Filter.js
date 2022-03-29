@@ -5,12 +5,13 @@ function defaultCheckFilters(filters){
     let tempFilterArr = {};
     filters.types.map((type)=> tempFilterArr[type] = true);
     filters.resources.map((resource)=> tempFilterArr[resource] = true);
+    filters.location.map((location)=> tempFilterArr[location] = true);
     return tempFilterArr;
 }
 
 const Filter = ({filters, onFilterChange}) => {
 
-    const [state, setState] = useState({type: false, resources: false});
+    const [state, setState] = useState({type: false, resources: false, location: false});
     const [checked, setChecked] = useState(defaultCheckFilters(filters));
 
     const toggleChecked = (event) => {
@@ -34,6 +35,11 @@ const Filter = ({filters, onFilterChange}) => {
                     resources: !state.resources
                 })
                 break;
+            case "location":
+                setState({
+                    location: !state.location
+                }) 
+                break;
             default:
                 break;
         }
@@ -47,7 +53,7 @@ const Filter = ({filters, onFilterChange}) => {
                         <td><b>Filters</b></td>
                         <td>
                             <div className='dropdown' data-control="checkbox-dropdown">
-                                <label className='dropdown-label' onClick={()=>toggleList("type")}>Category <FaAngleDown className='carret-down'/></label>
+                                <label className='dropdown-label' onClick={()=>toggleList("type")}>Type <FaAngleDown className='carret-down'/></label>
                                 {state.type === true && (
                                     <div className="dropdown-list">
                                         
@@ -81,6 +87,25 @@ const Filter = ({filters, onFilterChange}) => {
                                             Others
                                         </label><br></br>
                                         
+                                    </div>
+                                )}
+                            </div>
+                        </td>
+                        <td>
+                            <div className='dropdown' data-control="checkbox-dropdown">
+                                <label className='dropdown-label' onClick={()=>toggleList("location")}>Location <FaAngleDown className='carret-down'/></label>
+                                {state.location === true && (
+                                    <div className="dropdown-list">
+                                        
+                                        <label className="dropdown-option">
+                                            <input type="checkbox" name="location" value="southeast" onChange={(e)=>{onFilterChange(e.target.name);toggleChecked(e)}} defaultChecked={checked.southeast}/>
+                                            South East
+                                        </label><br></br>
+
+                                        <label className="dropdown-option">
+                                            <input type="checkbox" name="location" value="west" onChange={(e)=>{onFilterChange(e.target.name);toggleChecked(e)}} defaultChecked={checked.west}/>
+                                            West
+                                        </label>
                                     </div>
                                 )}
                             </div>
