@@ -149,8 +149,8 @@ const Result = ({data, getOrigin}) => {
         </>
         :
         <div className='not-found'>
-            <p>——— No result found ———</p>
-            <img src="not-found.gif" alt='No result found'/>
+            <p><b>——— No result found ———</b></p>
+            <img src="notfound.png" alt='No result found'/>
         </div>
         }
     </>

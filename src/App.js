@@ -1,5 +1,4 @@
 import './App.css';
-import Data from "./studySpots.json";
 import Search from './components/Search';
 import Filter from './components/Filter';
 import Result from './components/Result';
@@ -7,35 +6,21 @@ import { useEffect, useState } from "react";
 
 function App() {
 
-  const [data, setData] = useState(Data);
-  const [filters, setFilters] = useState({
-    types: ["cafe", "cc", "library", "mall", "school", "others"],
-    resources: ["aircon", "food", "outlets", "wifi"],
-    location: ["southeast", "west"]
-  });
+  const [data, setData] = useState(null);
 
-  useEffect(()=> {
-    filterResults()
-  }, [filters]);
+  useEffect(()=>{
+    fetch("http://localhost:8000/venues")
+    .then(res => {
+      return res.json();
+    }).then((data) => {
+      setData(data);
+    })
+  }, []);
 
-  const onFilterChange = (filterType) => {
-    var newFilters = [];
-    var checkboxes = document.querySelectorAll(`input[name='${filterType}']:checked`);
-    Array.from(checkboxes).forEach((checkbox)=>{newFilters.push(checkbox.value)});
-    setFilters(prevFilters => {
-      return {
-        ...prevFilters,
-        [filterType]: newFilters
-      };
-    });
-  }
-
-  const filterResults = () => {
-    //filters.location.includes(result.location) && 
-    //result.resources.sort().join(',') === filters.resources.sort().join(',')
+  const filterResults = (filters) => {
     let newResults = [];
-    newResults = Data.filter((result) => 
-      filters.types.includes(result.type) && filters.location.includes(result.location) && result.resources.sort().join(',') === filters.resources.sort().join(',')
+    newResults = data.filter((result) => 
+      filters.types.includes(result.type) && filters.region.includes(result.region) && result.resources.sort().join(',') === filters.resources.sort().join(',')
     );
     setData(newResults);
   }
@@ -55,13 +40,17 @@ function App() {
       <Search 
         setOrigin={setOrigin}
       />
-      <Filter
-        filters={filters}
-        onFilterChange={onFilterChange}/>
-      <Result 
-        data={data}
-        getOrigin={getOrigin}
-      />
+      { data &&
+        <>
+          <Filter
+            filterResults={filterResults}/>
+
+          <Result 
+            data={data}
+            getOrigin={getOrigin}
+          />
+        </>
+      }
     </div>
   );
 }
