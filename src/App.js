@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 function App() {
 
   const [data, setData] = useState(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(()=>{
     fetch("http://localhost:8000/venues")
@@ -14,6 +15,7 @@ function App() {
       return res.json();
     }).then((data) => {
       setData(data);
+      setFilteredData(data);
     })
   }, []);
 
@@ -22,7 +24,7 @@ function App() {
     newResults = data.filter((result) => 
       filters.types.includes(result.type) && filters.region.includes(result.region) && result.resources.sort().join(',') === filters.resources.sort().join(',')
     );
-    setData(newResults);
+    setFilteredData(newResults)
   }
 
   const [coord, setCoord] = useState({longitude: 0, latitude: 0});
@@ -40,13 +42,13 @@ function App() {
       <Search 
         setOrigin={setOrigin}
       />
-      { data &&
+      { filteredData &&
         <>
           <Filter
             filterResults={filterResults}/>
 
           <Result 
-            data={data}
+            data={filteredData}
             getOrigin={getOrigin}
           />
         </>

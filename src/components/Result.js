@@ -9,36 +9,38 @@ const Venues = (data, calculateDistance) => {
             <div key={venue.id} className="result">
                 <div className="content">
                     <table>
-                        <tr>
-                            <td className='thumbnail'><img src={venue.thumbnail} alt={venue.name}/><span className='bottom'>{calculateDistance(venue.name, venue.coordinates)}</span></td>
-                            <td>
-                                <h3>{venue.name}</h3>
-                                <span className='top'>{calculateDistance(venue.name, venue.coordinates)}</span>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td className='iconLabel'><MdLocationOn className="icons"/></td>
-                                            <td>{venue.address}</td>
-                                        </tr>
-                                        <tr>
-                                            <td className='iconLabel'><MdAccessTimeFilled className="icons"/></td>
-                                            <td>{venue.hours}</td>
-                                        </tr>
-                                        <tr>
-                                            <td className='iconLabel'><MdMore className="icons"/></td>
-                                            <td>
-                                                <div className='resources'>
-                                                    {venue.resources.find((val)=> val === "wifi") && <div className="resource">wifi</div>}
-                                                    {venue.resources.find((val)=> val === "chargingport") && <div className="resource">charging ports</div>}
-                                                    {venue.resources.find((val)=> val === "aircon") && <div className="resource">aircon</div>}
-                                                    {venue.resources.find((val)=> val === "food") && <div className="resource">food</div>}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td className='thumbnail'><img src={venue.thumbnail} alt={venue.name}/><span className='bottom'>{calculateDistance(venue.name, venue.coordinates)}</span></td>
+                                <td>
+                                    <h3>{venue.name}</h3>
+                                    <span className='top'>{calculateDistance(venue.name, venue.coordinates)}</span>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td className='iconLabel'><MdLocationOn className="icons"/></td>
+                                                <td>{venue.address}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='iconLabel'><MdAccessTimeFilled className="icons"/></td>
+                                                <td>{venue.hours}</td>
+                                            </tr>
+                                            <tr>
+                                                <td className='iconLabel'><MdMore className="icons"/></td>
+                                                <td>
+                                                    <div className='resources'>
+                                                        {venue.resources.find((val)=> val === "wifi") && <div className="resource">wifi</div>}
+                                                        {venue.resources.find((val)=> val === "chargingport") && <div className="resource">charging ports</div>}
+                                                        {venue.resources.find((val)=> val === "aircon") && <div className="resource">aircon</div>}
+                                                        {venue.resources.find((val)=> val === "food") && <div className="resource">food</div>}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     
                 </div>
