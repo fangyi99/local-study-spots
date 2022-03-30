@@ -2,12 +2,14 @@ import './App.css';
 import Search from './components/Search';
 import Filter from './components/Filter';
 import Result from './components/Result';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import IntroScreen from './components/IntroScreen';
 
 function App() {
 
   const [data, setData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
+  const [introScreen, setIntroScreen] = useState(true);
 
   useEffect(()=>{
     fetch("http://localhost:8000/venues")
@@ -18,6 +20,10 @@ function App() {
       setFilteredData(data);
     })
   }, []);
+
+  const hideIntroScreen = useCallback(() => {
+      setIntroScreen(false);
+  },[]);
 
   const filterResults = (filters) => {
     let newResults = [];
@@ -41,16 +47,23 @@ function App() {
     <div className="App">
       <Search 
         setOrigin={setOrigin}
+        hideIntroScreen={hideIntroScreen}
       />
       { filteredData &&
         <>
           <Filter
             filterResults={filterResults}/>
 
-          <Result 
-            data={filteredData}
-            getOrigin={getOrigin}
-          />
+          {
+            introScreen ? 
+              <IntroScreen 
+                hideIntroScreen={hideIntroScreen}/> 
+              :
+              <Result 
+                data={filteredData}
+                getOrigin={getOrigin}
+              />
+          }
         </>
       }
     </div>

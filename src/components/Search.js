@@ -4,7 +4,7 @@ import useInput from "../useInput";
 import { MdMyLocation } from "react-icons/md";
 // import useCoord from "../useCoord";
 
-const Search = ({setOrigin}) => {
+const Search = ({setOrigin, hideIntroScreen}) => {
 
     const address = useInput("");
     // const coord = useCoord();
@@ -15,20 +15,23 @@ const Search = ({setOrigin}) => {
                 placeholder="Address"
                 {...address}
                 isTyping={address.value !== ""}
+                onClick={()=>hideIntroScreen()}
             />
-            <button><MdMyLocation 
-                        title="Get Your Location"
-                        onClick={()=>{
-                            if ("geolocation" in navigator) {
-                                console.log("Geolocation available");
-                                navigator.geolocation.getCurrentPosition(function(position) {
-                                    address.findMyLocation(position.coords.longitude, position.coords.latitude);
-                                });
-                            } else {
-                                console.log("Geolocation not available");
-                            }
-                        }}
-                    />
+            <button>
+                <MdMyLocation 
+                    title="Get Your Location"
+                    onClick={()=>{
+                        if ("geolocation" in navigator) {
+                            alert("Retrieving location. Please wait...");
+                            hideIntroScreen();
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                address.findMyLocation(position.coords.longitude, position.coords.latitude);
+                            });
+                        } else {
+                            alert("Geolocation not available");
+                        }
+                    }}
+                />
             </button>
 
             {address.suggestions?.length > 0 && (

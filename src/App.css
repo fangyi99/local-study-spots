@@ -162,6 +162,25 @@ h3 {
 }
 
 
+/*Intro Screen*/
+
+.introScreen {
+    width: 85%;
+    margin: auto;
+    text-align: center;
+}
+
+.introIcon {
+    border: grey solid 1px;
+    border-radius: 5px;
+    background-color: #2195f3a9;
+    color: white;
+    padding: 3px;
+    margin: 5px;
+    margin-bottom: -5px;
+}
+
+
 /*Not Found*/
 
 .not-found {
@@ -213,5 +232,13 @@ h3 {
     .filter .dropdown-label {
         margin: 0px;
         width: 100%;
+    }
+    .introIcon {
+        border: none;
+        background-color: transparent;
+        color: black;
+        padding: 3px;
+        margin: 0px;
+        margin-bottom: -5px;
     }
 }
