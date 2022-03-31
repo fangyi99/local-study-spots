@@ -63,21 +63,9 @@ const Filter = ({filterResults}) => {
                 }) 
                 break;
             default:
-                setState({
-                    type: false,
-                    region: false,
-                    resources: false
-                }) 
                 break;
         }
     };
-
-    //close dropdown when not focus
-    document.addEventListener("click", (e)=>{
-        if(e.target.className!=="dropdown-label" && e.target.type!=="checkbox"){
-            toggleList("all");
-        }
-    })
 
     return (
         <div className='filter'>
