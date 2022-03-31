@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+<p align="justify">
+  
+# Local Study Spots App
+	
+This application returns a list of study venues sorted based on the user’s search or current location. The filter feature allows users to easily find the desired venue based on their requirements such as the venues’ location and resources.<br><br>
+This project aims to assist users in finding a quiet environment to study. This involves building a hybrid application, which integrates a list of consolidated study venues and geolocation. This solution is applicable to students and working adults whenever they need to escape the various distractions or yearn for a change in environment.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Getting Started
+> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+	
+1. Clone repository
 
-## Available Scripts
+		git clone https://github.com/fangyi99/local-study-spots.git
+	
+2. Install required libraries
+	
+		npm install
+	
+3. Create a new .env file and add the following API key inside
+	
+		REACT_APP_MAPBOX_TOKEN="{ACCESS_TOKEN}"
+	
+4. Run application
+	
+		npm start
 
-In the project directory, you can run:
+## Usage
 
-### `npm start`
+The following section shows how to build an interactive map in React using Mapbox. <br>
+You can [create a free account](https://account.mapbox.com/) and [get your first access token](https://docs.mapbox.com/help/getting-started/access-tokens/) to begin building with Mapbox now. 
+	
+First, create a new .env file and add the following API key inside.
+	
+	//Note: All environment variables need to start with "REACT_APP_"
+	REACT_APP_MAPBOX_TOKEN="{ACCESS_TOKEN}"
+	
+Next, modify the App.js file like shown below.
+	
+	export default function App(){
+		const [viewport, setViewport] = useState({
+			latitude: 454211,
+			longitude: -75.6903,
+			width:"100vh",
+			height:"100vh",
+			zoom:10
+		});
+		return (
+			<div>
+				<ReactMapGL
+					{...viewport}
+					mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+					onViewportChange={viewport => {
+						setViewport(viewport);
+					}}
+				/>
+			</div>
+		)
+	}
+	
+Now run the application. You should be able to see an interactive map.
+				
+	npm start
+				
+Click [here]() to view other use cases.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+	
+## Technology Stack
+-	[React](https://reactjs.org/)
+-	[JSON Server](https://www.npmjs.com/package/json-server)
+-	[Mapbox](https://www.mapbox.com/)
+-	[Geolib](https://www.npmjs.com/package/geolib)
+				
+## Reference
+- https://frostfairs.com/places-to-study-in-singapore/
+- https://studyramen.com/articles/10-free-studying-places-in-singapore/
+- https://sgp.postcodebase.com/
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p>
