@@ -12,7 +12,7 @@ function App() {
   const [introScreen, setIntroScreen] = useState(true);
 
   useEffect(()=>{
-    fetch("http://localhost:8000/venues")
+    fetch("https://local-study-spots-app.herokuapp.com/venues")
     .then(res => {
       return res.json();
     }).then((data) => {
