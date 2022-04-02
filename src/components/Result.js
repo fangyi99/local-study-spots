@@ -1,8 +1,9 @@
-import { getDistance } from 'geolib';
-import { useState } from 'react';
 import { MdLocationOn, MdAccessTimeFilled, MdMore, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md"
+import usePages from '../states/usePages';
+import {DataContext} from '../DataContext';
+import { useContext } from 'react';
 
-const Venues = (data, calculateDistance) => {
+const Venues = (data) => {
     return (
         <>
         {data.map((venue)=>(
@@ -11,10 +12,16 @@ const Venues = (data, calculateDistance) => {
                     <table>
                         <tbody>
                             <tr>
-                                <td className='thumbnail'><img src={venue.thumbnail} alt={venue.name}/><span className='bottom'>{calculateDistance(venue.name, venue.coordinates)}</span></td>
+                                <td className='thumbnail'><img src={venue.thumbnail} alt={venue.name}/><span className='bottom'>{
+                                    venue.distance &&
+                                    (venue.distance.toString().length > 3 ? `${(venue.distance/1000).toFixed(2)}KM` : `${(venue.distance/1000).toFixed(2)}M`)
+                                    }</span></td>
                                 <td>
                                     <h3>{venue.name}</h3>
-                                    <span className='top'>{calculateDistance(venue.name, venue.coordinates)}</span>
+                                    <span className='top'>{
+                                        venue.distance &&
+                                        (venue.distance.toString().length > 3 ? `${(venue.distance/1000).toFixed(2)}KM` : `${(venue.distance/1000).toFixed(2)}M`)
+                                    }</span>
                                     <table>
                                         <tbody>
                                             <tr>
@@ -50,79 +57,20 @@ const Venues = (data, calculateDistance) => {
     )
 }
 
-const Result = ({data, getOrigin}) => {
+const Result = () => {
 
-    //sorting array by distance
-    const origin = getOrigin();
-    var venuesArr = [...data];
-    venuesArr = venuesArr.sort((a,b) => a.distance - b.distance);
-
-    const setDistance = (name, distance) => {
-        //find current venue
-        let currentVenue = venuesArr.find((v) => v.name === name);
-        //ammend distance to current venue
-        currentVenue.distance = distance;
-    }
-
-    const calculateDistance = (name, destination) => {
-        var distance = getDistance(origin, destination);
-        setDistance(name, distance);
-        if(distance.toString().length > 3){
-            return (distance/1000).toFixed(2) + "KM";
-        }
-        else{
-            return (distance) + "M";
-        }
-    }
-
-        //pagination
-        const [currentPage, setCurrentPage] = useState(1);
-        const [itemsPerPage, setItemsPerPage] = useState(5);
-
-        const [pageNumberLimit, setPageNumberLimit] = useState(5);
-        const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
-        const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
-
-        const handlePage = (event) => {
-            setCurrentPage(Number(event.target.id));
-        };
+    const {dataContext} = useContext(DataContext);
+    const page = usePages(dataContext.filteredData);
     
-        const pages = [];
-        for(let i=1; i<=Math.ceil(data.length/itemsPerPage); i++){
-            pages.push(i);
-        }
-    
-        const indexOfLastItem = currentPage*itemsPerPage;
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        const currentItems = venuesArr.slice(indexOfFirstItem, indexOfLastItem);
+        const PageNumbers = page.pages.map(number => {
 
-        const handlePrevPage = () => {
-            setCurrentPage(currentPage - 1);
-
-            if((currentPage - 1) % pageNumberLimit === 0){
-                setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-                setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-            }
-        }
-
-        const handleNextPage = () => {
-            setCurrentPage(currentPage + 1);
-
-            if(currentPage + 1 > maxPageNumberLimit){
-                setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-                setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-            }
-        }
-    
-        const Pages = pages.map(number => {
-
-            if(number < maxPageNumberLimit+1 && number>minPageNumberLimit){
+            if(number < page.maxPageNumberLimit+1 && number > page.minPageNumberLimit){
                 return (
                     <li 
                         key={number}
                         id={number}
-                        className={currentPage === number ? "active" : null}
-                        onClick={handlePage}>
+                        className={page.currentPage === number ? "active" : null}
+                        onClick={page.handlePage}>
                         {number}
                     </li>
                 );
@@ -135,22 +83,22 @@ const Result = ({data, getOrigin}) => {
     return(
         <>
         {
-            data.length > 0 ?
+            dataContext.filteredData.length > 0 ?
             <>
-            {Venues(currentItems, calculateDistance)}
+            {Venues(page.currentItems)}
             <ul className='pageNumbers'>
                 <li>
                     <button 
-                        onClick={handlePrevPage}
-                        disabled={currentPage === pages[0] ? true:false}>
+                        onClick={page.handlePrevPage}
+                        disabled={page.currentPage === page.pages[0] ? true:false}>
                         <MdArrowBackIos/>
                     </button>
                 </li>
-                {Pages}
+                {PageNumbers}
                 <li>
                     <button 
-                        onClick={handleNextPage}
-                        disabled={currentPage === pages[pages.length - 1] ? true:false}>
+                        onClick={page.handleNextPage}
+                        disabled={page.currentPage === page.pages[page.pages.length - 1] ? true:false}>
                         <MdArrowForwardIos/>
                     </button>
                 </li>

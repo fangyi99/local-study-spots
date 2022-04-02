@@ -2,24 +2,18 @@ import './App.css';
 import Search from './components/Search';
 import Filter from './components/Filter';
 import Result from './components/Result';
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState, useContext } from "react";
 import IntroScreen from './components/IntroScreen';
+import useCoord from './states/useCoord'
+import {DataContext} from './DataContext';
+
 
 function App() {
 
-  const [data, setData] = useState(null);
-  const [filteredData, setFilteredData] = useState(null);
+  const {dataContext} = useContext(DataContext);
   const [introScreen, setIntroScreen] = useState(true);
 
-  useEffect(()=>{
-    fetch("https://local-study-spots-app.herokuapp.com/venues")
-    .then(res => {
-      return res.json();
-    }).then((data) => {
-      setData(data);
-      setFilteredData(data);
-    })
-  }, []);
+  // const coord = useCoord();
 
   const hideIntroScreen = useCallback(() => {
       setIntroScreen(false);
@@ -27,45 +21,31 @@ function App() {
 
   const filterResults = (filters) => {
     let newResults = [];
-    newResults = data.filter((result) => 
+    newResults = dataContext.data.filter((result) => 
       filters.types.includes(result.type) && filters.region.includes(result.region) && result.resources.sort().join(',') === filters.resources.sort().join(',')
     );
-    setFilteredData(newResults)
-  }
-
-  const [coord, setCoord] = useState({longitude: 0, latitude: 0});
-
-  const setOrigin = (longitude, latitude) => {
-    setCoord({longitude: longitude, latitude: latitude});
-  }
-
-  const getOrigin = () => {
-    return coord;
+    dataContext.setFilteredData(newResults)
   }
 
   return (
     <div className="App">
-      <Search 
-        setOrigin={setOrigin}
-        hideIntroScreen={hideIntroScreen}
-      />
-      { filteredData &&
-        <>
-          <Filter
-            filterResults={filterResults}/>
+        <Search 
+          hideIntroScreen={hideIntroScreen}
+        />
+        { dataContext.filteredData &&
+            <Filter
+              filterResults={filterResults}/>
+        }
 
-          {
-            introScreen ? 
-              <IntroScreen 
-                hideIntroScreen={hideIntroScreen}/> 
-              :
-              <Result 
-                data={filteredData}
-                getOrigin={getOrigin}
-              />
-          }
-        </>
-      }
+        {
+          introScreen ? 
+            <IntroScreen 
+              hideIntroScreen={hideIntroScreen}
+            /> 
+          :
+          dataContext.filteredData &&
+            <Result />
+        }
     </div>
   );
 }
