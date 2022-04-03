@@ -1,8 +1,8 @@
 <p align="justify">
   
-# StudyWhere
+# StudySpots
 	
-StudyWhere is a hybrid application which aims to assists users in finding a nearby quiet place to study in. <br><br> 
+StudySpots is a hybrid application which aims to assists users in finding a nearby quiet place to study in. <br><br> 
 This application consolidates various online lists and integrates them with geolocation to return a list of study venues based on the users’ location and selected filters. Users can choose the search or use their device’s location to set their origin. The filters, which include the type of venue, location, and resources, allow them to limit the results further. <br><br> 
 This application is applicable to anyone who wishes to avoid distractions or yearns for a change in the environment. With this application, users can quickly look up the various spots near them, knowing their facilities.
 
