@@ -1,7 +1,7 @@
 import { MdLocationOn, MdAccessTimeFilled, MdMore, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md"
-import usePages from '../states/usePages';
-import {DataContext} from '../DataContext';
 import { useContext } from 'react';
+import { DataContext } from '../contexts/DataContext';
+import { PageContext } from "../contexts/PageContext";
 
 const Venues = (data) => {
     return (
@@ -60,17 +60,17 @@ const Venues = (data) => {
 const Result = () => {
 
     const {dataContext} = useContext(DataContext);
-    const page = usePages(dataContext.filteredData);
+    const {pageContext} = useContext(PageContext);
     
-        const PageNumbers = page.pages.map(number => {
+        const PageNumbers = (pageContext.pages).map(number => {
 
-            if(number < page.maxPageNumberLimit+1 && number > page.minPageNumberLimit){
+            if(number < pageContext.maxPageNumberLimit + 1 && number > pageContext.minPageNumberLimit){
                 return (
                     <li 
                         key={number}
                         id={number}
-                        className={page.currentPage === number ? "active" : null}
-                        onClick={page.handlePage}>
+                        className={pageContext.currentPage === number ? "active" : null}
+                        onClick={pageContext.handlePage}>
                         {number}
                     </li>
                 );
@@ -85,20 +85,20 @@ const Result = () => {
         {
             dataContext.filteredData.length > 0 ?
             <>
-            {Venues(page.currentItems)}
+            {Venues(pageContext.currentItems)}
             <ul className='pageNumbers'>
                 <li>
                     <button 
-                        onClick={page.handlePrevPage}
-                        disabled={page.currentPage === page.pages[0] ? true:false}>
+                        onClick={pageContext.handlePrevPage}
+                        disabled={pageContext.currentPage === pageContext.pages[0] ? true:false}>
                         <MdArrowBackIos/>
                     </button>
                 </li>
                 {PageNumbers}
                 <li>
                     <button 
-                        onClick={page.handleNextPage}
-                        disabled={page.currentPage === page.pages[page.pages.length - 1] ? true:false}>
+                        onClick={pageContext.handleNextPage}
+                        disabled={pageContext.currentPage === pageContext.pages[pageContext.pages.length - 1] ? true:false}>
                         <MdArrowForwardIos/>
                     </button>
                 </li>

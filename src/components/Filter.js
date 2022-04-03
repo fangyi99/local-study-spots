@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { FaAngleDown } from "react-icons/fa";
+import { PageContext } from "../contexts/PageContext";
 
 function defaultCheckFilters(filters){
     let tempFilterArr = {};
@@ -10,6 +11,8 @@ function defaultCheckFilters(filters){
 }
 
 const Filter = ({filterResults}) => {
+
+    const {pageContext} = useContext(PageContext);
 
     const [filters, setFilters] = useState({
         types: ["cafe", "cc", "library", "mall", "school", "others"],
@@ -31,6 +34,7 @@ const Filter = ({filterResults}) => {
             [filterType]: newFilters
           };
         });
+        pageContext.resetPage();
       }
 
     const [state, setState] = useState({type: false, resources: false, region: false});

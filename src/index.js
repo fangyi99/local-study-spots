@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DataContextProvider from './DataContext';
+import DataContextProvider from './contexts/DataContext';
 import App from './App';
 
 ReactDOM.render(

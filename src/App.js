@@ -4,16 +4,14 @@ import Filter from './components/Filter';
 import Result from './components/Result';
 import { useCallback, useState, useContext } from "react";
 import IntroScreen from './components/IntroScreen';
-import useCoord from './states/useCoord'
-import {DataContext} from './DataContext';
+import { DataContext } from './contexts/DataContext';
+import PageContextProvider from './contexts/PageContext';
 
 
 function App() {
 
   const {dataContext} = useContext(DataContext);
   const [introScreen, setIntroScreen] = useState(true);
-
-  // const coord = useCoord();
 
   const hideIntroScreen = useCallback(() => {
       setIntroScreen(false);
@@ -29,22 +27,24 @@ function App() {
 
   return (
     <div className="App">
-        <Search 
-          hideIntroScreen={hideIntroScreen}
-        />
-        { dataContext.filteredData &&
-            <Filter
-              filterResults={filterResults}/>
-        }
+      { dataContext.filteredData &&
+        <PageContextProvider>
+          <Search 
+            hideIntroScreen={hideIntroScreen}
+          />
+          <Filter
+            filterResults={filterResults}
+          />
 
-        {
-          introScreen ? 
-            <IntroScreen 
-              hideIntroScreen={hideIntroScreen}
-            /> 
-          :
-          dataContext.filteredData &&
-            <Result />
+          {
+            introScreen ? 
+              <IntroScreen 
+                hideIntroScreen={hideIntroScreen}
+              /> 
+            :
+              <Result />
+          }
+          </PageContextProvider>
         }
     </div>
   );

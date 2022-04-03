@@ -1,54 +1,60 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-const usePages = (data) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+// const usePages = (data) => {
+//     const [currentPage, setCurrentPage] = useState(1);
+//     const [itemsPerPage, setItemsPerPage] = useState(5);
 
-    const [pageNumberLimit, setPageNumberLimit] = useState(5);
-    const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
-    const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+//     const [pageNumberLimit, setPageNumberLimit] = useState(5);
+//     const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+//     const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
-    const handlePage = (event) => {
-        setCurrentPage(Number(event.target.id));
-    };
+//     const handlePage = (event) => {
+//         setCurrentPage(Number(event.target.id));
+//     };
 
-    const pages = [];
-    for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
-        pages.push(i);
-    }
+//     const resetPage = () => {
+//         setCurrentPage(prevPage => 1);
+//         console.log(currentPage);
+//     }
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+//     const pages = [];
+//     for (let i = 1; i <= Math.ceil(data.length / itemsPerPage); i++) {
+//         pages.push(i);
+//     }
 
-    const handlePrevPage = () => {
-        setCurrentPage(currentPage - 1);
+//     const indexOfLastItem = currentPage * itemsPerPage;
+//     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-        if ((currentPage - 1) % pageNumberLimit === 0) {
-            setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-            setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-        }
-    }
+//     const handlePrevPage = () => {
+//         setCurrentPage(currentPage - 1);
 
-    const handleNextPage = () => {
-        setCurrentPage(currentPage + 1);
+//         if ((currentPage - 1) % pageNumberLimit === 0) {
+//             setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+//             setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+//         }
+//     }
 
-        if (currentPage + 1 > maxPageNumberLimit) {
-            setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
-            setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
-        }
-    }
+//     const handleNextPage = () => {
+//         setCurrentPage(currentPage + 1);
 
-    return {
-        pages,
-        currentPage,
-        currentItems,
-        handlePage,
-        handlePrevPage,
-        handleNextPage,
-        minPageNumberLimit,
-        maxPageNumberLimit
-    };
-}
+//         if (currentPage + 1 > maxPageNumberLimit) {
+//             setMaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+//             setMinPageNumberLimit(minPageNumberLimit + pageNumberLimit);
+//         }
+//     }
 
-export default usePages;
+//     return {
+//         pages,
+//         currentPage,
+//         currentItems,
+//         resetPage,
+//         handlePage,
+//         handlePrevPage,
+//         handleNextPage,
+//         minPageNumberLimit,
+//         maxPageNumberLimit
+//     };
+// }
+
+// export default usePages;

@@ -1,13 +1,15 @@
 import styled from "styled-components";
-import useInput from "../states/useInput";
-import { MdMyLocation } from "react-icons/md";
-import {DataContext} from '../DataContext';
 import { useContext } from "react";
+import { MdMyLocation } from "react-icons/md";
+import { DataContext } from '../contexts/DataContext';
+import { PageContext } from "../contexts/PageContext";
+import useInput from "../states/useInput";
 import useCoord from "../states/useCoord";
 
 const Search = ({hideIntroScreen}) => {
 
     const {dataContext} = useContext(DataContext);
+    const {pageContext} = useContext(PageContext);
     const coord = useCoord();
     const address = useInput("");
 
@@ -47,6 +49,7 @@ const Search = ({hideIntroScreen}) => {
                             address.setSuggestions([]);
                             coord.setOrigin(suggestion.geometry.coordinates[0], suggestion.geometry.coordinates[1]);
                             dataContext.refilterData({longitude: suggestion.geometry.coordinates[0], latitude: suggestion.geometry.coordinates[1]});
+                            pageContext.resetPage();
                         }}
                     >
                         {suggestion.place_name}
