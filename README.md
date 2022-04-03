@@ -1,9 +1,11 @@
 <p align="justify">
   
-# Local Study Spots App
+# StudyWhere
 	
-This application returns a list of study venues sorted based on the user’s search or current location. The filter feature allows users to easily find the desired venue based on their requirements such as the venues’ location and resources.<br><br>
-This project aims to assist users in finding a quiet environment to study. This involves building a hybrid application, which integrates a list of consolidated study venues and geolocation. This solution is applicable to students and working adults whenever they need to escape the various distractions or yearn for a change in environment.
+StudyWhere is a hybrid application which aims to assists users in finding a nearby quiet place to study in. <br><br> 
+This application consolidates various online lists and integrates them with geolocation to return a list of study venues based on the users’ location and selected filters. Users can choose the search or use their device’s location to set their origin. The filters, which include the type of venue, location, and resources, allow them to limit the results further. <br><br> 
+This application is applicable to anyone who wishes to avoid distractions or yearns for a change in the environment. With this application, users can quickly look up the various spots near them, knowing their facilities.
+
 
 ## Getting Started
 > This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -26,7 +28,7 @@ This project aims to assist users in finding a quiet environment to study. This 
 
 ## Usage
 
-The following section shows how to build an interactive map in React using Mapbox. <br>
+The following section shows how to create an autocomplete location search box using the Mapbox Geocoding API. <br>
 You can [create a free account](https://account.mapbox.com/) and [get your first access token](https://docs.mapbox.com/help/getting-started/access-tokens/) to begin building with Mapbox now. 
 	
 First, create a new .env file and add the following API key inside.
@@ -34,34 +36,67 @@ First, create a new .env file and add the following API key inside.
 	//Note: All environment variables need to start with "REACT_APP_"
 	REACT_APP_MAPBOX_TOKEN="{ACCESS_TOKEN}"
 	
-Next, modify the App.js file like shown below.
+Next, create a Search Component.<br>
+<b>Add the following logic to return the results upon each search input.</b>
 	
-	export default function App(){
-		const [viewport, setViewport] = useState({
-			latitude: 454211,
-			longitude: -75.6903,
-			width:"100vh",
-			height:"100vh",
-			zoom:10
-		});
-		return (
-			<div>
-				<ReactMapGL
-					{...viewport}
-					mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-					onViewportChange={viewport => {
-						setViewport(viewport);
-					}}
-				/>
-			</div>
-		)
-	}
+  // search logic
+	const [value, setValue] = useState(initialValue);
+    const [suggestions, setSuggestions] = useState([]);
+
+    const handleChange = async(event) => {
+        setValue(event.target.value);
+
+        try {
+            const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${event.target.value}.json?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}&autocomplete=true&country=SG`;
+            const response = await fetch(endpoint);
+            const results = await response.json();
+            setSuggestions(results?.features);
+        } catch (error) {
+            console.log("Error fetching data, ", error);
+        }
+    };
 	
-Now run the application. You should be able to see an interactive map.
+<b>Then, add the html aspect to update the returned results and selected value.</b>
+	
+    const Search = () => {
+    // search logic
+    return(
+        <Wrapper className="search">
+            <Input
+                placeholder="Address"
+                isTyping={value !== ""}
+                onChange={(event)=>handleChange(event)}
+            />
+
+            {suggestions?.length > 0 && (
+                <SuggestionWrapper>
+                {suggestions.map((suggestion, index) => {
+                    return (
+                    <Suggestion
+                        key={index}
+                        onClick={() => {
+                            setValue(suggestion.place_name);
+                            setSuggestions([]);
+                        }}
+                    >
+                        {suggestion.place_name}
+                    </Suggestion>
+                    );
+                })}
+                </SuggestionWrapper>
+            )}
+        </Wrapper>
+    )
+    }
+
+    export default Search;
+    // styling of components - Wrapper, Input, SuggestionWrapper
+          
+	
+Now run the application.
 				
 	npm start
 				
-Click [here]() to view other use cases.
 
 	
 ## Technology Stack
